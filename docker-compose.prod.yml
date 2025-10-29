@@ -12,7 +12,7 @@ services:
     ports:
       - "${MYSQL_PROD_PORT}:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql_prod_data:/var/lib/mysql
     networks:
       - prod-network
 
@@ -25,7 +25,7 @@ services:
     ports:
       - "${MONGO_PROD_PORT}:27017"
     volumes:
-      - mongodb_data:/data/db
+      - mongodb_prod_data:/data/db
     networks:
       - prod-network
 
@@ -39,7 +39,7 @@ services:
       - "${RABBITMQ_PROD_PORT}:5672"
       - "${RABBITMQ_PROD_MANAGEMENT_PORT}:15672"
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_prod_data:/var/lib/rabbitmq
     networks:
       - prod-network
 
@@ -49,37 +49,16 @@ services:
     ports:
       - "${REDIS_PROD_PORT}:6379"
     volumes:
-      - redis_data:/data
+      - redis_prod_data:/data
     networks:
       - prod-network
     command: redis-server --appendonly yes
 
-  minio:
-    image: minio/minio:latest
-    container_name: minio
-    environment:
-      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
-      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
-      MINIO_BROWSER_REDIRECT_URL: http://localhost:${MINIO_CONSOLE_PORT}
-    ports:
-      - "${MINIO_API_PORT}:9000"
-      - "${MINIO_CONSOLE_PORT}:9001"
-    volumes:
-      - minio_data:/data
-    networks:
-      - prod-network
-    command: server /data --console-address ":9001"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-      interval: 30s
-      timeout: 20s
-      retries: 3
-
 volumes:
-  mysql_data:
-  mongodb_data:
-  rabbitmq_data:
-  redis_data:
+  mysql_prod_data:
+  mongodb_prod_data:
+  rabbitmq_prod_data:
+  redis_prod_data:
 
 networks:
   prod-network:
