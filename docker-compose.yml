@@ -1,28 +1,6 @@
 version: '3.8'
 
 services:
-  runner:
-    image: myoung34/github-runner:latest
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      RUNNER_SCOPE: repo
-      RUNNER_NAME_PREFIX: myrunner
-      LABELS: some-label
-      REPO_URL: ${GITHUB_RUNNER_REPO}
-      EPHEMERAL: 1
-      ACCESS_TOKEN: ${GITHUB_RUNNER_TOKEN}
-    deploy:
-      replicas: 3
-      resources:
-        limits:
-          cpus: '1'
-          memory: 1G
-        reservations:
-          cpus: '0.2'
-          memory: 256M'
-
   minio:
     image: minio/minio:latest
     container_name: minio
