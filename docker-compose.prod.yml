@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  
   # Databases
   mysql:
     image: mysql:8.0

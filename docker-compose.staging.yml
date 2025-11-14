@@ -4,12 +4,12 @@ services:
   # Databases
   mysql:
     image: mysql:8.0
-    container_name: mysql-prod
+    container_name: mysql-dev
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PROD_PASS}
-      MYSQL_ROOT_HOST: "${MYSQL_ROOT_HOST}:%"
+      MYSQL_ROOT_PASSWORD: ${MYSQL_DEV_PASS}
+      MYSQL_ROOT_HOST: "${MYSQL_ROOT_HOST}%"
     ports:
-      - "${MYSQL_PROD_PORT}:3306"
+      - "${MYSQL_DEV_PORT}:3306"
     volumes:
       - mysql_dev_data:/var/lib/mysql
     networks:
@@ -17,12 +17,12 @@ services:
 
   mongodb:
     image: mongo:7.0
-    container_name: mongodb-prod
+    container_name: mongodb-dev
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_PROD_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PROD_PASSWORD}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DEV_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DEV_PASSWORD}
     ports:
-      - "${MONGO_PROD_PORT}:27017"
+      - "${MONGO_DEV_PORT}:27017"
     volumes:
       - mongodb_dev_data:/data/db
     networks:
@@ -30,13 +30,13 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.12-management
-    container_name: rabbitmq-prod
+    container_name: rabbitmq-dev
     environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_PROD_USERNAME}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PROD_PASSWORD}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEV_USERNAME}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEV_PASSWORD}
     ports:
-      - "${RABBITMQ_PROD_PORT}:5672"
-      - "${RABBITMQ_PROD_MANAGEMENT_PORT}:15672"
+      - "${RABBITMQ_DEV_PORT}:5672"
+      - "${RABBITMQ_DEV_MANAGEMENT_PORT}:15672"
     volumes:
       - rabbitmq_dev_data:/var/lib/rabbitmq
     networks:
@@ -44,9 +44,9 @@ services:
 
   redis:
     image: redis:7.2-alpine
-    container_name: redis-prod
+    container_name: redis-dev
     ports:
-      - "${REDIS_PROD_PORT}:6379"
+      - "${REDIS_DEV_PORT}:6379"
     volumes:
       - redis_dev_data:/data
     networks:
